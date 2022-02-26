@@ -123,29 +123,27 @@ function cancelEdit(callback) {
   callback(null);
 }
 
-function createTable(data){
+function addToTable(data){
+  // Name | C|I|A | 
   var tbody = document.getElementById('tbody');
+  console.log("hello");
+  //console.log(data[1]);
+    var tr = "<tr>";
 
-  for (var i = 0; i < data.length; i++) {
-      var tr = "<tr>";
+    tr += "<td>" + Object.values(data)[0] + "</td>" + "<td>" + Object.values(data)[3].toString() + "</td></tr>";
 
-      /* Verification to add the last decimal 0 */
-      if (data[i].label.toString().substring(data[i].label.toString().indexOf('.'), data[i].value.toString().length) < 2) 
-          data[i].label += "0";
+    /* We add the table row to the table body */
+    tbody.innerHTML += tr;
 
-      /* Must not forget the $ sign */
-      tr += "<td>" + data[i].key + "</td>" + "<td>$" + data[i].label.toString() + "</td></tr>";
-
-      /* We add the table row to the table body */
-      tbody.innerHTML += tr;
-  };
 }
 
 function saveData(data, callback) {
+  //console.log('called');
   data.id = document.getElementById("node-id").value;
   data.label = document.getElementById("node-label").value;
+  //console.log('data: ' + Object.values(data)[3]);
   clearPopUp();
-  createTable(data);
+  addToTable(data);
   callback(data);
 }
 
