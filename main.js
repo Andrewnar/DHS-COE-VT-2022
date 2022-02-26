@@ -123,10 +123,29 @@ function cancelEdit(callback) {
   callback(null);
 }
 
+function createTable(data){
+  var tbody = document.getElementById('tbody');
+
+  for (var i = 0; i < data.length; i++) {
+      var tr = "<tr>";
+
+      /* Verification to add the last decimal 0 */
+      if (data[i].label.toString().substring(data[i].label.toString().indexOf('.'), data[i].value.toString().length) < 2) 
+          data[i].label += "0";
+
+      /* Must not forget the $ sign */
+      tr += "<td>" + data[i].key + "</td>" + "<td>$" + data[i].label.toString() + "</td></tr>";
+
+      /* We add the table row to the table body */
+      tbody.innerHTML += tr;
+  };
+}
+
 function saveData(data, callback) {
   data.id = document.getElementById("node-id").value;
   data.label = document.getElementById("node-label").value;
   clearPopUp();
+  createTable(data);
   callback(data);
 }
 
