@@ -1,4 +1,15 @@
 <!DOCTYPE html>
+
+<!-- 
+  UI
+    Inserting Node
+    Deleting Node
+    Linking edges
+  Weighting of each edge... Risk Severity completing by Tricia
+
+
+-->
+
 <html lang="en">
   <head>
     <title>Network</title>
@@ -6,17 +17,14 @@
       type="text/javascript"
       src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"
     ></script>
-    <style type="text/css">
-      #mynetwork {
-        margin-left: auto;
-        margin-right: auto;
-        width: 600px;
-        height: 400px;
-        border: 1px solid lightgray;
-      }
-    </style>
+    <link rel = "stylesheet" type="text/css" href = "./main.css">
+    <script type="text/javascript" src="./main.js"></script>
+
   </head>
   <body>
+
+
+    <!-- Dataset -->
     <div id="mynetwork"></div>
     <script type="text/javascript">
       // create an array with nodes
@@ -29,10 +37,11 @@
       ]);
 
       // create an array with edges
-      var edges = new vis.DataSet([
-        { from: 1, to: 3 },
-        { from: 1, to: 2 },
-        { from: 2, to: 4 },
+      var edges = 
+      new vis.DataSet([
+        { from: 1, to: 3, value: 2 },
+        { from: 1, to: 2, value: 3, color: getColor(3) },
+        { from: 2, to: 4, value: 1 },
         { from: 2, to: 5 },
         { from: 3, to: 3 },
       ]);
@@ -43,8 +52,55 @@
         nodes: nodes,
         edges: edges,
       };
+      var options = {
+        nodes: {
+          shape: "dot",
+          scaling: {
+            customScalingFunction: function (min, max, total, value) {
+              return value / total;
+            },
+            min: 1,
+            max: 150,
+          },
+        },
+      };
       var options = {};
       var network = new vis.Network(container, data, options);
     </script>
+      <!-- Code to Add new Nodes-->
+      <div id="node-popUp">
+        <span id="node-operation">node</span> <br />
+        <table style="margin: auto">
+          <tbody>
+            <tr>
+              <td>id</td>
+              <td><input id="node-id" value="new value" /></td>
+            </tr>
+            <tr>
+              <td>label</td>
+              <td><input id="node-label" value="new value" /></td>
+            </tr>
+          </tbody>
+        </table>
+        <input type="button" value="save" id="node-saveButton" />
+        <input type="button" value="cancel" id="node-cancelButton" />
+      </div>
+      
+      <div id="edge-popUp">
+        <span id="edge-operation">edge</span> <br />
+        <table style="margin: auto">
+          <tbody>
+            <tr>
+              <td>label</td>
+              <td><input id="edge-label" value="new value" /></td>
+            </tr>
+          </tbody>
+        </table>
+        <input type="button" value="save" id="edge-saveButton" />
+        <input type="button" value="cancel" id="edge-cancelButton" />
+      </div>
+      
+      <br />
+
   </body>
 </html>
