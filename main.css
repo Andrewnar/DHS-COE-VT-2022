@@ -4,8 +4,11 @@ select {
 }
 #mynetwork {
   position: relative;
-  width: 800px;
-  height: 600px;
+  align-items: center;
+  width: 80vw;
+  height: 80vh;
+  top: 50%;
+  left: 10%;
   border: 1px solid lightgray;
 }
 table.legend_table {
@@ -20,6 +23,7 @@ td {
   border-color: #d3d3d3;
   border-style: solid;
   padding: 2px;
+  color: black
 }
 div.table_content {
   width: 80px;
@@ -36,14 +40,18 @@ div.table_description {
   display: none;
   position: absolute;
   top: 350px;
-  left: 170px;
+  left: 210px;
   z-index: 299;
   width: 250px;
-  height: 120px;
+  height: 160px;
   background-color: #f9f9f9;
   border-style: solid;
   border-width: 3px;
   border-color: #5394ed;
   padding: 10px;
   text-align: center;
+}
+
+#datatable {
+    color: blue;
 }

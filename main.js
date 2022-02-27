@@ -70,22 +70,32 @@ function draw() {
     manipulation: {
       addNode: function (data, callback) {
         // filling in the popup DOM elements
-        document.getElementById("operation").innerText = "Add Node";
+        document.getElementById("operation").innerText = "Add Asset";
+        data.label = document.getElementById("node-label").value
+
         document.getElementById("node-id").value = data.id;
-        document.getElementById("node-label").value = data.label;
+
+        // if(data.cia == 'C') data.color = "#f5f0e1";
+        // else if(data.cia == 'I') data.color = "#ff6e40";
+        // else if(data.cia == 'A') data.color = "#ffc13b";
         document.getElementById("saveButton").onclick = saveData.bind(
           this,
           data,
           callback
         );
+        document.getElementById("node-label").value = null;
+        //document.getElementById("node-CIA").value = null;
         document.getElementById("cancelButton").onclick = clearPopUp.bind();
         document.getElementById("network-popUp").style.display = "block";
       },
       editNode: function (data, callback) {
         // filling in the popup DOM elements
         document.getElementById("operation").innerText = "Edit Node";
+
         document.getElementById("node-id").value = data.id;
         document.getElementById("node-label").value = data.label;
+
+        //document.getElementById("node-CIA").value = data.cia;
         document.getElementById("saveButton").onclick = saveData.bind(
           this,
           data,
@@ -130,7 +140,7 @@ function addToTable(data){
   //console.log(data[1]);
     var tr = "<tr>";
 
-    tr += "<td>" + Object.values(data)[0] + "</td>" + "<td>" + Object.values(data)[3].toString() + "</td></tr>";
+    tr += "<td>" + Object.values(data)[4] + "</td>" + "<td>" + Object.values(data)[3].toString() + "</td></tr>";
 
     /* We add the table row to the table body */
     tbody.innerHTML += tr;
@@ -141,6 +151,8 @@ function saveData(data, callback) {
   //console.log('called');
   data.id = document.getElementById("node-id").value;
   data.label = document.getElementById("node-label").value;
+  //data.cia = document.getElementById("node-CIA").value
+
   //console.log('data: ' + Object.values(data)[3]);
   clearPopUp();
   addToTable(data);

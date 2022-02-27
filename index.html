@@ -21,6 +21,8 @@
     <script src="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"></script>
     <script src="https://unpkg.com/alea@1.0.0/alea.js"></script>
     <script src="https://visjs.github.io/vis-network/examples/network/exampleUtil.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     <link rel = "stylesheet" type="text/css" href = "./main.css">
     <script type="text/javascript" src="./main.js"></script>
 
@@ -52,22 +54,25 @@
     </p>
     
     <div id="network-popUp">
-      <span id="operation">node</span> <br />
+      <span id="operation" style="color: black;">node</span> <br />
       <table style="margin: auto">
         <tbody>
           <tr>
-            <td style="color:black;">Type</td>
-            <td><input id="node-type" placeholder="Major/Minor" /></td>
-          </tr>
-          <tr>
-            <td style="color:black;">Id</td>
-            <td><input id="node-id" value="Fekwofpaj" /></td>
-          </tr>
-          <tr>
             <td style="color:black;">Name</td>
-            <td><input id="node-label" placeholder="Database-Breach"/> 
+            <td><input id="node-label" placeholder = "Name of Asset"> 
             </td>
           </tr>
+          <tr>
+            <td style="color:black;">Ratings</td>
+            <td><input type = "text" id="node-C" placeholder="C (1-10)">
+              <input type = "text" id="node-I" placeholder="I (1-10)">
+              <input type = "text" id="node-C" placeholder="A (1-10)"></td>
+          </tr>
+          <tr hidden>
+            <td style="color:black;">Id</td>
+            <td><input id="node-id"></td>
+          </tr>
+          
         </tbody>
       </table>
       <input type="button" value="save" id="saveButton" />
@@ -76,9 +81,10 @@
     <br />
     <div id="mynetwork"></div>   
     
-    <table>
-      <tbody id="tbody"></tbody>
-    </table>
-
+    <div id="datatable">
+      <table>
+       <tbody id="tbody"></tbody>
+      </table>
+    </div>
   </body>
 </html>
