@@ -4,14 +4,14 @@ var network = null;
 // randomly create some nodes and edges
 var data = getScaleFreeNetwork(25);
 var seed = 2;
-var id = 0;
+
 
 assets = []
 
 class Asset {
   // constructor(name, description, tags, parent, type) {
-    constructor(name, description, tags, type, c, i, a) {
-    this.id = id++;
+    constructor(id, name, description, tags, type, c, i, a) {
+    this.id = id;
     this.name = name;
     this.description = description;
     this.tags = tags;
@@ -41,19 +41,13 @@ function getColor(weight) {
   var yellow = 10;
   var base = 0;
   if (weight >= base && weight < yellow) {
-    return "#0000FF";
+    return "#0000FF"; // blue
+  } else if (weight >= yellow && weight < orange) {
+    return "#FFFF00"; // yellow
+  } else if (weight >= orange && weight < red) {
+    return "#FFA500"; // orange
   } else {
-    if (weight >= yellow && weight < orange) {
-      return "#FFFF00";
-    } else {
-      if (weight >= orange && weight < red) {
-        return "#FFA500";
-      } else {
-        if (weight >= red) {
-          return "#FF0000";
-        }
-      }
-    }
+    return "#FF0000"; // red
   }
 }
 
@@ -66,6 +60,8 @@ function getColor(weight) {
     { from: 3, to: 3 },
   ]);
 }*/
+
+
 
 function destroy() {
   if (network !== null) {
@@ -87,29 +83,51 @@ function draw() {
     manipulation: {
       addNode: function (data, callback) {
         // filling in the popup DOM elements
-        // document.getElementById("asset-name").innerText = "Name";
-
-        // document.getElementById("operation").innerText = "Add Node";
-        // document.getElementById("node-id").value = data.id;
-        // document.getElementById("node-label").value = data.label;
+        document.getElementById("operation").innerText = "Add Node";
+        document.getElementById("node-id").value = data.id;
+       //document.getElementById("node-label").value = data.label;
         // document.getElementById("node-CIA").value = data.cia;
-        document.getElementById("saveButton").onclick = saveData.bind(
-          this,
-          data,
-          callback
-        );
-
-
-
+        document.getElementById("saveButton").onclick = saveData.bind(this,data,callback);
         document.getElementById("cancelButton").onclick = clearPopUp.bind();
         document.getElementById("network-popUp").style.display = "block";
+        
+        document.getElementById("type1").checked = false;
+        document.getElementById("type2").checked = false;
+        document.getElementById("asset-name").value=null;
+        document.getElementById("asset-description").value=null;
+        document.getElementById("asset-c").value=null;
+        document.getElementById("asset-i").value=null;
+        document.getElementById("asset-a").value=null;
+
+        var tag_boxes = document.querySelectorAll('input[name="asset-tag"]');
+        for (const tag_box in tag_boxes) {
+          tag_box.checked = false;
+        }
       },
       editNode: function (data, callback) {
         // filling in the popup DOM elements
         document.getElementById("operation").innerText = "Edit Node";
         document.getElementById("node-id").value = data.id;
-        document.getElementById("node-label").value = data.label;
-        document.getElementById("node-CIA").value = data.cia;
+        // document.getElementById("node-label").value = data.label;
+        for(const asset in assets){
+          if (asset.id == data.id){
+            document.getElementById("asset-name").value = asset.name;
+            document.getElementById("asset-descrption").value = asset.description;
+            document.getElementById("asset-c").value = asset.risk_c;
+            document.getElementById("asset-i").value = asset.risk_i;
+            document.getElementById("asset-a").value = asset.risk_a;
+            // document.getElementById("node-id").value = tags[0];
+            var tag_boxes = document.querySelectorAll('input[name="asset-tag"]');
+            for (const tag_box in tag_boxes) {
+              if (tag_box.value in asset.tags) {
+                tag_box.checked = true;
+              }
+            }
+            
+          }
+        }
+        // document.getElementById("asset-name").value = data.id;
+
         document.getElementById("saveButton").onclick = saveData.bind(
           this,
           data,
@@ -120,6 +138,7 @@ function draw() {
           callback
         );
         document.getElementById("network-popUp").style.display = "block";
+        
       },
       addEdge: function (data, callback) {
         if (data.from == data.to) {
@@ -147,22 +166,25 @@ function cancelEdit(callback) {
   callback(null);
 }
 
-function addToTable(data) {
+function displayTable() {
   // Name | C|I|A | 
   var tbody = document.getElementById('tbody');
   console.log("hello");
   //console.log(data[1]);
-  var tr = "<tr>";
+  for(asset in assets){
+    console.log(asset);
+    console.log(assets[asset].name);
+    var tr = "<tr>";
 
-  tr += "<td>" + Object.values(data)[4] + "</td>" + "<td>" + Object.values(data)[3].toString() + "</td></tr>";
+    tr += "<td>" + assets[asset].name + "</td>" + "<td>" + assets[asset].threats + "</td>" + "<td>" + assets[asset].threat_score + "</td></tr>";
+    tbody.innerHTML += tr;
 
+  }
   /* We add the table row to the table body */
-  tbody.innerHTML += tr;
 
 }
 
 function saveData(data, callback) {
-
   var type;
   var ele = document.getElementsByName('asset-type');
 
@@ -184,13 +206,20 @@ function saveData(data, callback) {
   var i = document.getElementById("asset-i").value;
   var a = document.getElementById("asset-a").value;
 
+  data.id = document.getElementById("node-id").value;
 
-  assets.push(new Asset(name, description, tags, type, c, i, a));
+  assets.push(new Asset(data.id, name, description, tags, type, c, i, a));
   console.log(assets)
 
+  //data.cia = document.getElementById("node-CIA").value
+
+  //console.log('data: ' + Object.values(data)[3]);
+  data.label = name;
   clearPopUp();
   // addToTable(data);
+  
   callback(data);
+  displayTable();
 }
 
 function init() {
@@ -200,3 +229,55 @@ function init() {
 window.addEventListener("load", () => {
   init();
 });
+
+filterSelection("all")
+function filterSelection(c) {
+  var x, i;
+  x = document.getElementsByClassName("filterDiv");
+  if (c == "all") c = "";
+  // Add the "show" class (display:block) to the filtered elements, and remove the "show" class from the elements that are not selected
+  for (i = 0; i < x.length; i++) {
+    RemoveClass(x[i], "show");
+    if (x[i].className.indexOf(c) > -1) AddClass(x[i], "show");
+  }
+}
+
+// Show filtered elements
+function AddClass(element, name) {
+  var i, arr1, arr2;
+  arr1 = element.className.split(" ");
+  arr2 = name.split(" ");
+  for (i = 0; i < arr2.length; i++) {
+    if (arr1.indexOf(arr2[i]) == -1) {
+      element.className += " " + arr2[i];
+    }
+  }
+}
+
+// Hide elements that are not selected
+// function RemoveClass(element, name) {
+//   var i, arr1, arr2;
+//   arr1 = element.className.split(" ");
+//   arr2 = name.split(" ");
+//   for (i = 0; i < arr2.length; i++) {
+//     while (arr1.indexOf(arr2[i]) > -1) {
+//       arr1.splice(arr1.indexOf(arr2[i]), 1);
+//     }
+//   }
+//   element.className = arr1.join(" ");
+// }
+
+// // Add active class to the current control button (highlight it)
+// var btnContainer = document.getElementById("myBtnContainer");
+// var btns = btnContainer.getElementsByClassName("btn");
+// for (var i = 0; i < btns.length; i++) {
+//   btns[i].addEventListener("click", function() {
+//     var current = document.getElementsByClassName("active");
+//     current[0].className = current[0].className.replace(" active", "");
+//     this.className += " active";
+//   });
+// }
+
+// function FilterThreats(threat){
+  
+// }
