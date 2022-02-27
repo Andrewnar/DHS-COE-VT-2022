@@ -27,163 +27,147 @@
 
   <body>
     <h2>DHS COE Hackathon 2022- Visualizing Risk</h2>
-    <table class="asset" style="margin: auto">
-      <thead>
-        <span id="operation">Asset</span>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="color: black">Asset Type</td>
-          <td>
-            <input
-              type="radio"
-              id="type1"
-              name="asset-type"
-              value="Major"
-            />Major
-            <input
-              type="radio"
-              id="type2"
-              name="asset-type"
-              value="Minor"
-            />Minor
-          </td>
-        </tr>
-        <tr>
-          <td style="color: black">Name</td>
-          <td><input id="asset-name" placeholder="ex: SCADA-17" /></td>
-        </tr>
-        <tr>
-          <td style="color: black">Description</td>
-          <td>
-            <textarea
-              id="asset-description"
-              cols="50"
-              rows="10"
-              placeholder="ex: database tracking SCADA technologies located at facility XYZ"
-            ></textarea>
-          </td>
-        </tr>
-        <tr>
-          <td style="color: black">Confidentiality Risk</td>
-          <td><input id="asset-c" placeholder="ex: 9" /></td>
-        </tr>
-        <tr>
-          <td style="color: black">Integrity Risk</td>
-          <td><input id="asset-i" placeholder="ex: 7" /></td>
-        </tr>
-        <tr>
-          <td style="color: black">Availability Risk</td>
-          <td><input id="asset-a" placeholder="ex: 3" /></td>
-        </tr>
-        <tr hidden>
-          <td style="color: black">Id</td>
-          <td><input id="node-id" /></td>
-        </tr>
-        <tr>
-          <td style="color: black">Tags</td>
-          <td>
-            <div class="data">
-              <span>
-                <input name="asset-tag" type="checkbox" value="ICS" />
-                <label for="asset-tag">ICS</label>
-              </span>
+    <div id="network-popUp">
+      <span id="operation">Asset</span>
+      <table class="asset" style="margin: auto">
+        <!-- <thead>
+          <!-- <div class="center"> -->
+        <!-- <span id="operation">Asset</span> -->
+        <!-- </div> -->
+        <!-- </thead> -->
+        <tbody>
+          <tr>
+            <td style="color: black">Asset Type</td>
+            <td>
+              <input
+                type="radio"
+                id="type1"
+                name="asset-type"
+                value="Major"
+              />Major
+              <input
+                type="radio"
+                id="type2"
+                name="asset-type"
+                value="Minor"
+              />Minor
+            </td>
+          </tr>
+          <tr>
+            <td style="color: black">Name</td>
+            <td><input id="asset-name" placeholder="ex: SCADA-17" /></td>
+          </tr>
+          <tr>
+            <td style="color: black">Description</td>
+            <td>
+              <textarea
+                id="asset-description"
+                cols="25"
+                rows="5"
+                placeholder="ex: database tracking SCADA technologies located at facility XYZ"
+              ></textarea>
+            </td>
+          </tr>
+          <tr>
+            <td style="color: black">Confidentiality Risk</td>
+            <td><input id="asset-c" placeholder="ex: 9" /></td>
+          </tr>
+          <tr>
+            <td style="color: black">Integrity Risk</td>
+            <td><input id="asset-i" placeholder="ex: 7" /></td>
+          </tr>
+          <tr>
+            <td style="color: black">Availability Risk</td>
+            <td><input id="asset-a" placeholder="ex: 3" /></td>
+          </tr>
+          <tr hidden>
+            <td style="color: black">Id</td>
+            <td><input id="node-id" /></td>
+          </tr>
+          <tr>
+            <td style="color: black">Tags</td>
+            <td>
+              <div class="data">
+                <span>
+                  <input name="asset-tag" type="checkbox" value="ICS" />
+                  <label for="asset-tag">ICS</label>
+                </span>
 
-              <span>
-                <input name="asset-tag" type="checkbox" value="SCADA" />
-                <label for="asset-tag">SCADA</label>
-              </span>
+                <span>
+                  <input name="asset-tag" type="checkbox" value="SCADA" />
+                  <label for="asset-tag">SCADA</label>
+                </span>
 
-              <span>
-                <input name="asset-tag" type="checkbox" value="IoT" />
-                <label for="asset-tag">IoT</label>
-              </span>
+                <span>
+                  <input name="asset-tag" type="checkbox" value="IoT" />
+                  <label for="asset-tag">IoT</label>
+                </span>
 
-              <span>
-                <input name="asset-tag" type="checkbox" value="Database" />
-                <label for="asset-tag">Database</label>
-              </span>
+                <span>
+                  <input name="asset-tag" type="checkbox" value="Database" />
+                  <label for="asset-tag">Database</label>
+                </span>
 
-              <span>
-                <input name="asset-tag" type="checkbox" value="PII" />
-                <label for="asset-tag">PII</label>
-              </span>
+                <span>
+                  <input name="asset-tag" type="checkbox" value="PII" />
+                  <label for="asset-tag">PII</label>
+                </span>
 
-              <!-- <input type="button" onclick="alert(getCheckedCheckboxesFor('asset-tag'));" value="Get Values" /> -->
-            </div>
-          </td>
+                <!-- <input type="button" onclick="alert(getCheckedCheckboxesFor('asset-tag'));" value="Get Values" /> -->
+              </div>
+            </td>
 
-          <!-- <td style="color:black;">Tags</td>
-        <td><textarea id="asset-description" cols="50" rows="10"
-            placeholder="Database tracking SCADA technologies located at facility XYZ"></textarea>
-        </td> -->
-        </tr>
-      </tbody>
-    </table>
-    <input type="button" value="save" id="saveButton" />
-    <input type="button" value="cancel" id="cancelButton" />
-    <!-- </div> -->
+            <!-- <td style="color:black;">Tags</td>
+          <td><textarea id="asset-description" cols="50" rows="10"
+              placeholder="Database tracking SCADA technologies located at facility XYZ"></textarea>
+          </td> -->
+          </tr>
+        </tbody>
+      </table>
+      <input type="button" value="save" id="saveButton" />
+      <input type="button" value="cancel" id="cancelButton" />
+    </div>
     <br />
 
-    <div class="center">
+    <div class="left">
       <div id="mynetwork"></div>
     </div>
-    
-    <!-- Control buttons -->
-    <div id="myCheckboxContainer">
-      <span>
-        <input name="asset-tag" type="checkbox" value="ICS" />
-        <label for="asset-tag">ICS</label>
+
+    <!-- The filterable elements. Note that some have multiple class names (this can be used if they belong to multiple categories) -->
+    <br />
+    <div class="categories">
+      <span class="category">
+        <input type="checkbox" value="ics" id="cat-ics" />
+        <label for="cat-ics">ICS</label>
       </span>
-      <span>
-        <input name="asset-tag" type="checkbox" value="SCADA" />
-        <label for="asset-tag">SCADA</label>
+      <span class="category">
+        <input type="checkbox" value="scada" id="cat-scada" />
+        <label for="cat-scada">SCADA</label>
       </span>
-      <span>
-        <input name="asset-tag" type="checkbox" value="IoT" />
-        <label for="asset-tag">IoT</label>
+      <span class="category">
+        <input type="checkbox" value="iot" id="cat-iot" />
+        <label for="cat-iot">IoT</label>
       </span>
-      <span>
-        <input name="asset-tag" type="checkbox" value="Database" />
-        <label for="asset-tag">Database</label>
+      <span class="category">
+        <input type="checkbox" value="database" id="cat-database" />
+        <label for="cat-database">Database</label>
       </span>
-      <span>
-        <input name="asset-tag" type="checkbox" value="PII" />
-        <label for="asset-tag">PII</label>
+      <span class="category">
+        <input type="checkbox" value="pii" id="cat-pii" />
+        <label for="cat-pii">PII</label>
       </span>
     </div>
-    <!-- The filterable elements. Note that some have multiple class names (this can be used if they belong to multiple categories) -->
-<div class="options">
-  <label><input type="radio" name="operation" value="union" id="op-union" checked> Union</label>
-  <label><input type="radio" name="operation" value="intersection" id="op-inter"> Intersection</label>
-</div>
 
-<div class="categories">
-  <span class="category">
-    <input type="checkbox" value="ics" id="cat-cars">
-    <label for="cat-cars">ICS</label>
-  </span>
-  <span class="category">
-    <input type="checkbox" value="scada" id="cat-animals">
-    <label for="cat-animals">SCADA</label>
-  </span>
-  <span class="category">
-    <input type="checkbox" value="iot" id="cat-fruits">
-    <label for="cat-fruits">IoT</label>
-  </span>
-  <span class="category">
-    <input type="checkbox" value="database" id="cat-colors">
-    <label for="cat-colors">Database</label>
-  </span>
-  <span class="category">
-    <input type="checkbox" value="pii" id="cat-colors">
-    <label for="cat-colors">PII</label>
-  </span>
-</div>
-
-
-    <table>
-      <tbody id="tbody"></tbody>
-    </table>
+    <br />
+    <div style="overflow-x: auto">
+      <table id="overviewTable">
+        <tr>
+          <th>Name</th>
+          <th>Threats</th>
+          <th>Threat Score</th>
+        </tr>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
   </body>
 </html>

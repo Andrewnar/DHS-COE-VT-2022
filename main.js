@@ -168,7 +168,12 @@ function cancelEdit(callback) {
 
 function displayTable() {
   // Name | C|I|A | 
+
+
   var tbody = document.getElementById('tbody');
+  if(tbody.innerHTML != null){
+    tbody.innerHTML = null;
+  }
   console.log("hello");
   //console.log(data[1]);
   for(asset in assets){
@@ -254,30 +259,3 @@ function AddClass(element, name) {
   }
 }
 
-// Hide elements that are not selected
-// function RemoveClass(element, name) {
-//   var i, arr1, arr2;
-//   arr1 = element.className.split(" ");
-//   arr2 = name.split(" ");
-//   for (i = 0; i < arr2.length; i++) {
-//     while (arr1.indexOf(arr2[i]) > -1) {
-//       arr1.splice(arr1.indexOf(arr2[i]), 1);
-//     }
-//   }
-//   element.className = arr1.join(" ");
-// }
-
-// // Add active class to the current control button (highlight it)
-// var btnContainer = document.getElementById("myBtnContainer");
-// var btns = btnContainer.getElementsByClassName("btn");
-// for (var i = 0; i < btns.length; i++) {
-//   btns[i].addEventListener("click", function() {
-//     var current = document.getElementsByClassName("active");
-//     current[0].className = current[0].className.replace(" active", "");
-//     this.className += " active";
-//   });
-// }
-
-// function FilterThreats(threat){
-  
-// }
