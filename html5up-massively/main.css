@@ -17,10 +17,14 @@ h2 {
 #tbody:hover {background-color: lightgray;}
 #mynetwork {
   position: relative;
-  width: 60vw;
-  height: 45vw;
-  border: 1px solid lightgray;
+  width: 73vw;
+  height: 35vw;
+  border: 3px solid lightgray;
+  justify-items: center;
   background: #d1d1d1;
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-size: 35vw 35vw;
 } 
 
 table.asset {
@@ -93,36 +97,24 @@ div.table_description {
 }
 
 #network-popUp {
-  /* text-align: center;
-  display: none;
-  font-size: 6px;
-  border-style: solid;
-  border-color: #5394ed;
-  padding: 10px; */
-  display: none;
-  position: absolute;
-  top: 250px;
-  right: 50px;
-  z-index: 299;
-  width: 350px;
-  height: 300px;
-  background-color: #f9f9f9;
-  border-style: solid;
-  border-width: 3px;
-  border-color: #5394ed;
-  padding: 10px;
   text-align: center;
-  font-size: 6px;
+  display: none;
+  font-size: auto;
+  top: auto;
+  right: auto;
+  width: auto;
+  height: auto;
+  background-color: #f9f9f9;
 }
 
-input {
+/* input {
   font-size: 12px;
   height: 2em;
 }
 
 textarea {
   font-size: 12px;
-}
+} */
 
 .center {
   display: flex;

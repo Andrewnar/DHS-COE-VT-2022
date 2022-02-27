@@ -2,15 +2,44 @@ var nodes = null;
 var edges = null;
 var network = null;
 // randomly create some nodes and edges
-var data = getScaleFreeNetwork(25);
+
+var nodes = new vis.DataSet([
+  {
+    id: 1,
+    label: "Gas Processing Plant",
+    value: 1000,
+    color: "#FFFF00",
+    shape: "dot",
+  },
+  { id: 2, label: "Node 2", color: "green" },
+  { id: 3, label: "Node 3", color: "red" },
+  { id: 4, label: "Node 4" },
+  { id: 5, label: "Node 5" },
+]);
+
+// create an array with edges
+var edges = new vis.DataSet([
+  { from: 1, to: 3, color: { color: "green" } },
+  { from: 1, to: 2, color: { color: "red" } },
+  { from: 2, to: 4, color: { color: "red" } },
+  { from: 2, to: 5, color: { color: "red" } },
+  { from: 3, to: 3, color: { color: "red" } },
+]);
+
+// create a network
+var container = document.getElementById("mynetwork");
+var data = {
+  nodes: nodes,
+  edges: edges,
+};
+
 var seed = 2;
 
-
-assets = []
+assets = [];
 
 class Asset {
   // constructor(name, description, tags, parent, type) {
-    constructor(id, name, description, tags, type, c, i, a) {
+  constructor(id, name, description, tags, type, c, i, a) {
     this.id = id;
     this.name = name;
     this.description = description;
@@ -61,8 +90,6 @@ function getColor(weight) {
   ]);
 }*/
 
-
-
 function destroy() {
   if (network !== null) {
     network.destroy();
@@ -85,19 +112,25 @@ function draw() {
         // filling in the popup DOM elements
         document.getElementById("operation").innerText = "Add Node";
         document.getElementById("node-id").value = data.id;
-       //document.getElementById("node-label").value = data.label;
+        //document.getElementById("node-label").value = data.label;
         // document.getElementById("node-CIA").value = data.cia;
-        document.getElementById("saveButton").onclick = saveData.bind(this,data,callback);
+        // document.getElementById("add_threat").onclick = newApi(data);
+
+        document.getElementById("saveButton").onclick = saveData.bind(
+          this,
+          data,
+          callback
+        );
         document.getElementById("cancelButton").onclick = clearPopUp.bind();
         document.getElementById("network-popUp").style.display = "block";
-        
+
         document.getElementById("type1").checked = false;
         document.getElementById("type2").checked = false;
-        document.getElementById("asset-name").value=null;
-        document.getElementById("asset-description").value=null;
-        document.getElementById("asset-c").value=null;
-        document.getElementById("asset-i").value=null;
-        document.getElementById("asset-a").value=null;
+        document.getElementById("asset-name").value = null;
+        document.getElementById("asset-description").value = null;
+        document.getElementById("asset-c").value = null;
+        document.getElementById("asset-i").value = null;
+        document.getElementById("asset-a").value = null;
 
         var tag_boxes = document.querySelectorAll('input[name="asset-tag"]');
         for (const tag_box in tag_boxes) {
@@ -109,24 +142,28 @@ function draw() {
         document.getElementById("operation").innerText = "Edit Node";
         document.getElementById("node-id").value = data.id;
         // document.getElementById("node-label").value = data.label;
-        for(const asset in assets){
-          if (asset.id == data.id){
+        for (const asset in assets) {
+          if (asset.id == data.id) {
             document.getElementById("asset-name").value = asset.name;
-            document.getElementById("asset-descrption").value = asset.description;
+            document.getElementById("asset-descrption").value =
+              asset.description;
             document.getElementById("asset-c").value = asset.risk_c;
             document.getElementById("asset-i").value = asset.risk_i;
             document.getElementById("asset-a").value = asset.risk_a;
             // document.getElementById("node-id").value = tags[0];
-            var tag_boxes = document.querySelectorAll('input[name="asset-tag"]');
+            var tag_boxes = document.querySelectorAll(
+              'input[name="asset-tag"]'
+            );
             for (const tag_box in tag_boxes) {
               if (tag_box.value in asset.tags) {
                 tag_box.checked = true;
               }
             }
-            
+
           }
         }
         // document.getElementById("asset-name").value = data.id;
+        // document.getElementById("add_threat").onclick = newApi(data);
 
         document.getElementById("saveButton").onclick = saveData.bind(
           this,
@@ -138,7 +175,6 @@ function draw() {
           callback
         );
         document.getElementById("network-popUp").style.display = "block";
-        
       },
       addEdge: function (data, callback) {
         if (data.from == data.to) {
@@ -167,45 +203,113 @@ function cancelEdit(callback) {
 }
 
 function displayTable() {
-  // Name | C|I|A | 
+  // Name | C|I|A |
 
-
-  var tbody = document.getElementById('tbody');
-  if(tbody.innerHTML != null){
+  var tbody = document.getElementById("tbody");
+  if (tbody.innerHTML != "null") {
     tbody.innerHTML = null;
   }
   console.log("hello");
   //console.log(data[1]);
-  for(asset in assets){
+  for (asset in assets) {
     console.log(asset);
     console.log(assets[asset].name);
     var tr = "<tr>";
 
-    tr += "<td>" + assets[asset].name + "</td>" + "<td>" + assets[asset].threats + "</td>" + "<td>" + assets[asset].threat_score + "</td></tr>";
+    tr +=
+      "<td>" +
+      assets[asset].name +
+      "</td>" +
+      "<td>" +
+      assets[asset].threats +
+      "</td>" +
+      "<td>" +
+      assets[asset].threat_score +
+      "</td></tr>";
     tbody.innerHTML += tr;
-
   }
   /* We add the table row to the table body */
-
 }
+function newApi(data) {
+  // threat data
 
+  var threat_name = document.getElementById("threat-name").value;
+
+  var tcats = [];
+  var tcat_boxes = document.querySelectorAll(
+    'input[name="threat-category"]:checked'
+  );
+  Array.prototype.forEach.call(tcat_boxes, function (el) {
+    tcats.push(el.value);
+  });
+
+  var threat_risk = document.getElementById("threat-risk").value;
+
+  var exists = false;
+  var existing;
+  for (asset in assets) {
+    console.log("in");
+    if (assets[asset].id === data.id) {
+      exists = true;
+      existing = asset;
+      break;
+    }
+  }
+
+  for (const asset in assets) {
+    if (assets[asset].id == data.id) {
+          assets[asset].threats.push(new Threat(threat_name, tcats, threat_risk));
+      }
+      var tbody = document.getElementById('threats');
+      if (tbody.innerHTML != "null") {
+        tbody.innerHTML = null;
+      }
+
+      console.log('139');
+      for (threat in assets[asset].threats){
+
+        console.log('threats: ' + assets[asset].threats)
+
+        var tr = "<tr>"
+
+        tr += '<td><input value="'+ assets[asset].threats[threat].name + '" placeholder="e.g. Morris Worm" /></td>'
+      
+        
+
+        var tcat_boxes = ['Confidentiality', 'Integrity', 'Availability']
+        tr += '<td>'
+        for (let i = 0; i < tcat_boxes.length; i++) {
+          if (assets[asset].threats[threat].category.includes(tcat_boxes[i])) {
+            tr += '<input name="threat-category" type="checkbox" value=' + tcat_boxes[i] +' checked = true/>'
+          } else {
+            tr += '<input name="threat-category" type="checkbox" value="' + tcat_boxes[i] +'"/>'
+          }
+        }
+
+        tr += '</td><td><input value="'+ assets[asset].threats[threat].risk + '" placeholder="e.g. 7"/></td></tr>'
+
+        tbody.innerHTML += tr;
+
+      }
+    }
+  
+}
 function saveData(data, callback) {
   var type;
-  var ele = document.getElementsByName('asset-type');
+  var ele = document.getElementsByName("asset-type");
 
   for (i = 0; i < ele.length; i++) {
-    if (ele[i].checked)
-      type = ele[i].value;
+    if (ele[i].checked) type = ele[i].value;
   }
 
   var name = document.getElementById("asset-name").value;
   var description = document.getElementById("asset-description").value;
 
-  var tags = []
+  var tags = [];
   var tag_boxes = document.querySelectorAll('input[name="asset-tag"]:checked');
   Array.prototype.forEach.call(tag_boxes, function (el) {
-    tags.push(el.value)
-  })
+    tags.push(el.value);
+  });
 
   var c = document.getElementById("asset-c").value;
   var i = document.getElementById("asset-i").value;
@@ -214,7 +318,8 @@ function saveData(data, callback) {
   data.id = document.getElementById("node-id").value;
 
   assets.push(new Asset(data.id, name, description, tags, type, c, i, a));
-  console.log(assets)
+  console.log(assets);
+  
 
   //data.cia = document.getElementById("node-CIA").value
 
@@ -222,7 +327,7 @@ function saveData(data, callback) {
   data.label = name;
   clearPopUp();
   // addToTable(data);
-  
+
   callback(data);
   displayTable();
 }
@@ -235,7 +340,7 @@ window.addEventListener("load", () => {
   init();
 });
 
-filterSelection("all")
+filterSelection("all");
 function filterSelection(c) {
   var x, i;
   x = document.getElementsByClassName("filterDiv");
@@ -258,4 +363,3 @@ function AddClass(element, name) {
     }
   }
 }
-
