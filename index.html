@@ -11,74 +11,110 @@
 -->
 
 <html lang="en">
-  <head>
-    <title>Network</title>
-    <script
-      type="text/javascript"
-      src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"
-    ></script>
-    
-    <script src="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"></script>
-    <script src="https://unpkg.com/alea@1.0.0/alea.js"></script>
-    <script src="https://visjs.github.io/vis-network/examples/network/exampleUtil.js"></script>
-    <link rel = "stylesheet" type="text/css" href = "./main.css">
-    <script type="text/javascript" src="./main.js"></script>
 
-  </head>
-  <body>
+<head>
+  <title>Network</title>
+  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
-    <div style="text-align:center;">
-      <h2>DHS COE Hackathon 2022- Visualizing Risk</h2>
-    </div>
-    
-    <p style="width: 700px; font-size: 14px; text-align: justify">
-      The localization is only relevant to the manipulation buttons.
-    </p>
-    
-    <p>
-      <label for="locale">Select a Language:</label>
-      <select id="locale" onchange="draw();">
-        <option value="en">en</option>
-        <option value="cn">cn</option>
-        <option value="cs">cs</option>
-        <option value="de">de</option>
-        <option value="es">es</option>
-        <option value="fr">fr</option>
-        <option value="it">it</option>
-        <option value="nl">nl</option>
-        <option value="pt-br">pt</option>
-        <option value="ru">ru</option>
-      </select>
-    </p>
-    
-    <div id="network-popUp">
-      <span id="operation">node</span> <br />
-      <table style="margin: auto">
-        <tbody>
-          <tr>
-            <td style="color:black;">Type</td>
-            <td><input id="node-type" placeholder="Major/Minor" /></td>
-          </tr>
-          <tr>
-            <td style="color:black;">Id</td>
-            <td><input id="node-id" value="Fekwofpaj" /></td>
-          </tr>
-          <tr>
-            <td style="color:black;">Name</td>
-            <td><input id="node-label" placeholder="Database-Breach"/> 
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <input type="button" value="save" id="saveButton" />
-      <input type="button" value="cancel" id="cancelButton" />
-    </div>
-    <br />
-    <div id="mynetwork"></div>   
-    
-    <table>
-      <tbody id="tbody"></tbody>
+  <script src="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"></script>
+  <script src="https://unpkg.com/alea@1.0.0/alea.js"></script>
+  <script src="https://visjs.github.io/vis-network/examples/network/exampleUtil.js"></script>
+  <link rel="stylesheet" type="text/css" href="./main.css">
+  <script type="text/javascript" src="./main.js"></script>
+
+</head>
+
+<body>
+
+  <div style="text-align:center;">
+    <h2>DHS COE Hackathon 2022- Visualizing Risk</h2>
+  </div>
+
+  <div id="network-popUp">
+    <span id="operation">Asset</span> <br />
+    <table style="margin: auto">
+      <tbody>
+        <tr>
+          <td style="color: black;">Asset Type</td>
+          <td><input type="radio" id="type1" name="asset-type" value="Major">Major
+          <input type="radio" id="type2" name="asset-type" value="Minor">Minor</td>
+        </tr>
+        <tr>
+          <td style="color:black;">Name</td>
+          <td><input id="asset-name" placeholder="SCADA Database" />
+          </td>
+        </tr>
+        <tr>
+          <td style="color:black;">Description</td>
+          <td><textarea id="asset-description" cols="50" rows="10"
+              placeholder="Database tracking SCADA technologies located at facility XYZ"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="color:black;">Confidentiality Risk</td>
+          <td><input id="asset-c" placeholder="9"/>
+          </td>
+        </tr>
+        <tr>
+          <td style="color:black;">Integrity Risk</td>
+          <td><input id="asset-i" placeholder="7"/>
+          </td>
+        </tr>
+        <tr>
+          <td style="color:black;">Availability Risk</td>
+          <td><input id="asset-a" placeholder="3"/>
+          </td>
+        </tr>
+        <tr>
+          <td style="color:black;">Tags</td>
+          <td>
+            <div class="data">
+              <span>
+                <input name="asset-tag" type="checkbox" value="ICS" />
+                <label for="asset-tag">ICS</label>
+              </span>
+
+              <span>
+                <input name="asset-tag" type="checkbox" value="SCADA" />
+                <label for="asset-tag">SCADA</label>
+              </span>
+
+              <span>
+                <input name="asset-tag" type="checkbox" value="IoT" />
+                <label for="asset-tag">IoT</label>
+              </span>
+
+              <span>
+                <input name="asset-tag" type="checkbox" value="Database" />
+                <label for="asset-tag">Database</label>
+              </span>
+
+              <span>
+                <input name="asset-tag" type="checkbox" value="PII" />
+                <label for="asset-tag">PII</label>
+              </span>
+
+              <!-- <input type="button" onclick="alert(getCheckedCheckboxesFor('asset-tag'));" value="Get Values" /> -->
+            </div>
+          </td>
+
+          <!-- <td style="color:black;">Tags</td>
+          <td><textarea id="asset-description" cols="50" rows="10"
+              placeholder="Database tracking SCADA technologies located at facility XYZ"></textarea>
+          </td> -->
+        </tr>
+      </tbody>
     </table>
+    <input type="button" value="save" id="saveButton" />
+    <input type="button" value="cancel" id="cancelButton" />
+  </div>
+  <br />
+  <div id="mynetwork"></div>
 
-  </body>
+  <table>
+    <tbody id="tbody"></tbody>
+  </table>
+
+</body>
+
 </html>

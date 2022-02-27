@@ -4,34 +4,52 @@ var network = null;
 // randomly create some nodes and edges
 var data = getScaleFreeNetwork(25);
 var seed = 2;
+var id = 0;
 
-function setDefaultLocale() {
-  var defaultLocal = navigator.language;
-  var select = document.getElementById("locale");
-  select.selectedIndex = 0; // set fallback value
-  for (var i = 0, j = select.options.length; i < j; ++i) {
-    if (select.options[i].getAttribute("value") === defaultLocal) {
-      select.selectedIndex = i;
-      break;
-    }
+assets = []
+
+class Asset {
+  // constructor(name, description, tags, parent, type) {
+    constructor(name, description, tags, type, c, i, a) {
+    this.id = id++;
+    this.name = name;
+    this.description = description;
+    this.tags = tags;
+    // this.parent = parent;
+    this.type = type;
+    this.risk_c = c;
+    this.risk_i = i;
+    this.risk_a = a;
+    this.threats = [];
+    this.children = [];
+    this.threat_score = 0;
   }
 }
 
-function getColor(weight){
+class Threat {
+  constructor(name, category, type, severity) {
+    this.name = name;
+    this.category = category;
+    this.type = type;
+    this.severity = severity;
+  }
+}
+
+function getColor(weight) {
   var red = 30;
   var orange = 20;
   var yellow = 10;
   var base = 0;
-  if(weight >= base && weight < yellow){
+  if (weight >= base && weight < yellow) {
     return "#0000FF";
-  }else{
-    if(weight >= yellow && weight < orange){
+  } else {
+    if (weight >= yellow && weight < orange) {
       return "#FFFF00";
-    }else{
-      if(weight >= orange && weight < red){
+    } else {
+      if (weight >= orange && weight < red) {
         return "#FFA500";
-      }else{
-        if(weight >= red){
+      } else {
+        if (weight >= red) {
           return "#FF0000";
         }
       }
@@ -65,19 +83,24 @@ function draw() {
   var container = document.getElementById("mynetwork");
   var options = {
     layout: { randomSeed: seed }, // just to make sure the layout is the same when the locale is changed
-    locale: document.getElementById("locale").value,
     interaction: { keyboard: true },
     manipulation: {
       addNode: function (data, callback) {
         // filling in the popup DOM elements
-        document.getElementById("operation").innerText = "Add Node";
-        document.getElementById("node-id").value = data.id;
-        document.getElementById("node-label").value = data.label;
+        // document.getElementById("asset-name").innerText = "Name";
+
+        // document.getElementById("operation").innerText = "Add Node";
+        // document.getElementById("node-id").value = data.id;
+        // document.getElementById("node-label").value = data.label;
+        // document.getElementById("node-CIA").value = data.cia;
         document.getElementById("saveButton").onclick = saveData.bind(
           this,
           data,
           callback
         );
+
+
+
         document.getElementById("cancelButton").onclick = clearPopUp.bind();
         document.getElementById("network-popUp").style.display = "block";
       },
@@ -86,6 +109,7 @@ function draw() {
         document.getElementById("operation").innerText = "Edit Node";
         document.getElementById("node-id").value = data.id;
         document.getElementById("node-label").value = data.label;
+        document.getElementById("node-CIA").value = data.cia;
         document.getElementById("saveButton").onclick = saveData.bind(
           this,
           data,
@@ -123,34 +147,53 @@ function cancelEdit(callback) {
   callback(null);
 }
 
-function createTable(data){
+function addToTable(data) {
+  // Name | C|I|A | 
   var tbody = document.getElementById('tbody');
+  console.log("hello");
+  //console.log(data[1]);
+  var tr = "<tr>";
 
-  for (var i = 0; i < data.length; i++) {
-      var tr = "<tr>";
+  tr += "<td>" + Object.values(data)[4] + "</td>" + "<td>" + Object.values(data)[3].toString() + "</td></tr>";
 
-      /* Verification to add the last decimal 0 */
-      if (data[i].label.toString().substring(data[i].label.toString().indexOf('.'), data[i].value.toString().length) < 2) 
-          data[i].label += "0";
+  /* We add the table row to the table body */
+  tbody.innerHTML += tr;
 
-      /* Must not forget the $ sign */
-      tr += "<td>" + data[i].key + "</td>" + "<td>$" + data[i].label.toString() + "</td></tr>";
-
-      /* We add the table row to the table body */
-      tbody.innerHTML += tr;
-  };
 }
 
 function saveData(data, callback) {
-  data.id = document.getElementById("node-id").value;
-  data.label = document.getElementById("node-label").value;
+
+  var type;
+  var ele = document.getElementsByName('asset-type');
+
+  for (i = 0; i < ele.length; i++) {
+    if (ele[i].checked)
+      type = ele[i].value;
+  }
+
+  var name = document.getElementById("asset-name").value;
+  var description = document.getElementById("asset-description").value;
+
+  var tags = []
+  var tag_boxes = document.querySelectorAll('input[name="asset-tag"]:checked');
+  Array.prototype.forEach.call(tag_boxes, function (el) {
+    tags.push(el.value)
+  })
+
+  var c = document.getElementById("asset-c").value;
+  var i = document.getElementById("asset-i").value;
+  var a = document.getElementById("asset-a").value;
+
+
+  assets.push(new Asset(name, description, tags, type, c, i, a));
+  console.log(assets)
+
   clearPopUp();
-  createTable(data);
+  // addToTable(data);
   callback(data);
 }
 
 function init() {
-  setDefaultLocale();
   draw();
 }
 

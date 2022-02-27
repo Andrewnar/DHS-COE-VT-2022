@@ -33,8 +33,9 @@ div.table_description {
   font-size: 28px;
 }
 #network-popUp {
+  text-align: center;
   display: none;
-  position: absolute;
+  /* position: absolute;
   top: 350px;
   left: 170px;
   z-index: 299;
@@ -45,5 +46,5 @@ div.table_description {
   border-width: 3px;
   border-color: #5394ed;
   padding: 10px;
-  text-align: center;
+  text-align: center;  */
 }
