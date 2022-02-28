@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+  <head>
+    <title>DHS COE 2022 - Visualizing Threats</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript
+      ><link rel="stylesheet" href="assets/css/noscript.css"
+    /></noscript>
+
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"
+    ></script>
+    <script src="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"></script>
+    <script src="https://unpkg.com/alea@1.0.0/alea.js"></script>
+    <script src="https://visjs.github.io/vis-network/examples/network/exampleUtil.js"></script>
+    <link rel="stylesheet" type="text/css" href="./main.css" />
+    <script type="text/javascript" src="./main.js"></script>
+
+    <style>
+      /* input[type="radio"] {
+        size: 100em;
+      } */
+
+    </style>
+  </head>
+  <body class="is-preload">
+    <!-- Wrapper -->
+    <div id="wrapper" class="fade-in">
+      <!-- Intro -->
+      <div id="intro">
+        <h1>
+          DHS COE 2022<br />
+          Visualizing Threats
+        </h1>
+        <p>
+          Countering Emerging Threats to Critical Infrastructure
+        </p>
+        <ul class="actions">
+          <li>
+            <a
+              href="#header"
+              class="button icon solid solo fa-arrow-down scrolly"
+              >Continue</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <!-- Header -->
+      <header id="header">
+        <a class="logo">Threat Analysis Tool</a>
+      </header>
+
+      <!-- Nav -->
+      <nav id="nav">
+        <ul class="links">
+        <li><a href="generic.html">Home</a></li>
+          <li class="active"><a href="index.html">Threat Analysis Tool</a></li>
+          <li><a href="elements.html">Contacts</a></li>
+        </ul>
+        <ul class="icons">
+          <li>
+            <a href="https://github.com/Andrewnar/DHS-COE-VT-2022" class="icon brands fa-github"target = "_blank"
+              ><span class="label">GitHub</span></a
+            >
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main -->
+      <div id="main">
+        <!-- Featured Post -->
+        <article class="post featured">
+          <header class="major">
+            <h2>
+              <a href="#"
+                >Risk-Assessment<br />
+                In the Cyber Era</a
+              >
+            </h2>
+            <p>
+              Today's cyber landscape is everchanging and volatile. Methods of preventing or deterring any potential attack<br /> has to be combatted by everchanging methods.
+              The goal of the Department of Homeland Security, and its many domains,<br /> is to protect the security of our nation's critical infastructure.
+            </p>
+          </header>
+          <a href="#" class="image main"
+            ><img src="./images/shutterstock_1805073769-scaled.jpg" alt="Container"
+          /></a>
+          <!-- <ul class="actions special">
+            <li><a href="./generic.html" class="button large">Full Story</a></li>
+          </ul> -->
+        </article>
+
+        <div id="network-popUp">
+          <span id="operation">Asset</span>
+          <table class="asset" style="margin: auto">
+            <!-- <thead>
+									<!-- <div class="center"> -->
+            <!-- <span id="operation">Asset</span> -->
+            <!-- </div> -->
+            <!-- </thead> -->
+            <tbody>
+
+              <tr>
+                <td style="color: black">Asset</td>
+                <td><input id="asset-name" placeholder="ex: SCADA-17" /></td>
+              </tr>
+              <tr>
+                <td style="color: black">Description</td>
+                <td>
+                  <textarea
+                    id="asset-description"
+                    cols="25"
+                    rows="3"
+                    placeholder="ex: database tracking SCADA technologies located at facility XYZ"
+                  ></textarea>
+                </td>
+              </tr>
+              <tr>
+                <td style="color: black">Confidentiality Risk</td>
+                <td><input id="asset-c" placeholder="ex: 9" /></td>
+              </tr>
+              <tr>
+                <td style="color: black">Integrity Risk</td>
+                <td><input id="asset-i" placeholder="ex: 7" /></td>
+              </tr>
+              <tr>
+                <td style="color: black">Availability Risk</td>
+                <td><input id="asset-a" placeholder="ex: 3" /></td>
+              </tr>              
+			  <tr>
+                <td style="color: black">Protection</td>
+                <td>
+                  <input id="protect" placeholder="ex: 4" /></td>
+              </tr>
+              <tr hidden>
+                <td style="color: black">Id</td>
+                <td><input id="node-id" /></td>
+              </tr>
+              <tr>
+                <td style="color: black">Tags</td>
+                <td>
+                  <div class="data">
+                    <span>
+                      <input name="asset-tag" type="checkbox" value="ICS" />
+                      <label for="asset-tag">ICS</label>
+                    </span>
+
+                    <span>
+                      <input name="asset-tag" type="checkbox" value="SCADA" />
+                      <label for="asset-tag">SCADA</label>
+                    </span>
+
+                    <span>
+                      <input name="asset-tag" type="checkbox" value="IoT" />
+                      <label for="asset-tag">IoT</label>
+                    </span>
+
+                    <span>
+                      <input
+                        name="asset-tag"
+                        type="checkbox"
+                        value="Database"
+                      />
+                      <label for="asset-tag">Database</label>
+                    </span>
+
+                    <span>
+                      <input name="asset-tag" type="checkbox" value="PII" />
+                      <label for="asset-tag">PII</label>
+                    </span>
+
+                    <!-- <input type="button" onclick="alert(getCheckedCheckboxesFor('asset-tag'));" value="Get Values" /> -->
+                  </div>
+                </td>
+
+                <!-- <td style="color:black;">Tags</td>
+									<td><textarea id="asset-description" cols="50" rows="10"
+										placeholder="Database tracking SCADA technologies located at facility XYZ"></textarea>
+									</td> -->
+              </tr>
+			  <tr>
+				<td style="color:black;">Threats</td>
+	  
+				<table style="margin: auto">
+				  <thead>
+					<tr>
+					  <th>Name</th>
+					  <th>Categories</th>
+					  <th>Risk</th>
+					</tr>
+				  </thead>
+				  <tbody id="threats"></tbody>
+				  <!-- <tbody id="threats1">
+					<tr>
+					  <td><input id="threat-name" placeholder="e.g. Morris Worm" />
+					  </td>
+	  
+					  <td>
+						<div class="data">
+						  <span>
+							<input name="threat-category" id="tcat1" type="checkbox" value="Confidentiality" />
+							<label for="threat-category">Confidentiality</label>
+						  </span>
+	  
+						  <span>
+							<input name="threat-category" id="tcat2" type="checkbox" value="Integrity" />
+							<label for="threat-category">Integrity</label>
+						  </span>
+	  
+						  <span>
+							<input name="threat-category" id="tcat3" type="checkbox" value="Availability" />
+							<label for="threat-category">Availability</label>
+						  </span>
+						</div>
+					  </td>
+	  
+					  <td><input id="threat-risk" placeholder="e.g. 7" />
+					  </td>
+					</tr>
+				  </tbody> -->
+				</table>
+	  
+				
+            </tbody>
+          </table>
+          <input type="button" value="save" id="saveButton" />
+          <input type="button" value="cancel" id="cancelButton" />
+        </div>
+        <br />
+
+        <!-- <div class="center">
+          Threat Analysis Tool
+        </div> -->
+
+        <div class="center">
+          <!-- <header>Threat Analysis Tool</header> -->
+          <div id="mynetwork"></div>
+        </div>
+		
+		<div style="overflow-x: auto">
+			<table id="overviewTable">
+			  <tr>
+				<th>Name</th>
+				<th>Confidentiality</th>
+				<th>Integrity</th>
+				<th>Availability</th>
+				<th>Protection</th>
+        <th>Risk</th>
+			  </tr>
+			  <tbody id="tbody"></tbody>
+			  	<tbody>
+					<tr>
+            <td>Inspections</td> <td>7</td> <td>8</td> <td>5</td> <td>12</td> <td>8</td> 
+					</tr>
+					<tr>
+						<td>Cargo Shipments</td> <td>4</td> <td>5</td> <td>3</td> <td>7</td> <td>5</td>
+				  </tr>
+				  <tr>
+					  <td>Railways</td> <td>3</td> <td>8</td> <td>6</td> <td>4</td> <td>13</td> 
+			    </tr>
+				  <tr>
+					  <td>Ports</td> <td>5</td> <td>3</td> <td>6</td> <td>2</td> <td>12</td> 
+			    </tr>
+				  <tr>
+					  <td>Warehouses</td> <td>9</td> <td>5</td> <td>6</td> <td>6</td> <td>14</td> 
+			    </tr>
+          <tr>
+					  <td>Loading</td> <td>4</td> <td>2</td> <td>10</td> <td>2</td> <td>14</td> 
+			    </tr>			
+          <tr>
+					  <td>Navigation</td> <td>10</td> <td>8</td> <td>9</td> <td>9</td> <td>18</td> 
+			    </tr>	
+          <tr>
+					  <td>Communications</td> <td>8</td> <td>1</td> <td>5</td> <td>2</td> <td>12</td> 
+			    </tr>	
+          <tr>
+					  <td>Ships</td> <td>7</td> <td>6</td> <td>9</td> <td>8</td> <td>14</td> 
+			    </tr>		
+				</tbody>
+			</table>
+		  </div>
+        <!-- Posts -->
+        
+        <!-- Footer -->
+        
+      </div>
+
+     
+      <!-- Copyright -->
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>

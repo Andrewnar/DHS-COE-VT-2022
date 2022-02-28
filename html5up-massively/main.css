@@ -1,0 +1,123 @@
+body,
+select {
+  font: 10pt sans;
+}
+
+h2 {
+  text-align: center;
+}
+
+#overviewTable{
+    position: center;
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+    
+}
+#tbody:hover {background-color: lightgray;}
+#mynetwork {
+  position: relative;
+  width: 73vw;
+  height: 35vw;
+  border: 3px solid lightgray;
+  justify-items: center;
+  background: #f1e3dd;
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-size: 35vw 35vw;
+} 
+
+table.asset {
+  text-align: left;
+}
+
+table.legend_table {
+  font-size: 30px;
+  border-width: 1px;
+  border-color: #d3d3d3;
+  border-style: solid;
+  padding: 2px;
+}
+table.legend_table,
+td {
+  border-width: 1px;
+  border-color: #d3d3d3;
+  border-style: solid;
+  padding: 2px;
+}
+.container {
+  overflow: hidden;
+}
+
+.filterDiv {
+  float: left;
+  background-color: #2196F3;
+  color: #ffffff;
+  width: 100px;
+  line-height: 100px;
+  text-align: center;
+  margin: 2px;
+  display: none; /* Hidden by default */
+}
+
+/* The "show" class is added to the filtered elements */
+.show {
+  display: block;
+}
+
+/* Style the buttons */
+.btn {
+  border: none;
+  outline: none;
+  padding: 12px 16px;
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+/* Add a light grey background on mouse-over */
+.btn:hover {
+  background-color: #ddd;
+}
+
+/* Add a dark background to the active button */
+.btn.active {
+  background-color: #666;
+  color: white;
+}
+div.table_content {
+  width: 80px;
+  text-align: center;
+}
+div.table_description {
+  width: 100px;
+}
+
+#operation {
+  font-size: 28px;
+}
+
+#network-popUp {
+  text-align: center;
+  display: none;
+  font-size: auto;
+  top: auto;
+  right: auto;
+  width: auto;
+  height: auto;
+  background-color: #f9f9f9;
+}
+
+/* input {
+  font-size: 12px;
+  height: 2em;
+}
+
+textarea {
+  font-size: 12px;
+} */
+
+.center {
+  display: flex;
+  justify-content: center;
+  padding: 0px 0px 0px 0px;
+}
